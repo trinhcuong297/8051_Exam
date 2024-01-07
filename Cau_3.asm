@@ -1,7 +1,7 @@
 ;===================== Main and Interrupt Start ==================
 
 	ORG 00h 					;Start from address 00h
-	SJMP MAIN 					;Jump to Main program
+	LJMP MAIN 					;Jump to Main program
 	
 	ORG 03h 					;External 0 interrupt start
 	NOP 						;No code
@@ -34,15 +34,9 @@
 ;=================================================================
 	ORG 50H 					;Start Main program at 50H in ROM
 Main:
-	MOV 6CH, #12				;Set 6CH to 12
-	MOV 70H, #12				;Set 70H to 12
-	MOV 71H, #12				;Set 71H to 12
-	MOV 73H, #12				;Set 73H to 12
-	MOV 76H, #12				;Set 76H to 12
-
 	MOV R0, #10					;Set R0 to Loop length
 	MOV R1, #6CH				;Set R2 to First Address
-	LCALL Del_loop			;Start loop
+	LCALL Del_loop				;Start loop
 here:
 	SJMP here 					;
 	

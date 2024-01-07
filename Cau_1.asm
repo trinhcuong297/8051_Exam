@@ -1,7 +1,7 @@
 ;===================== Main and Interrupt Start ==================
 
 	ORG 00h 					;Start from address 00h
-	SJMP MAIN 					;Jump to Main program
+	LJMP MAIN 					;Jump to Main program
 	
 	ORG 03h 					;External 0 interrupt start
 	NOP 						;No code
@@ -34,18 +34,12 @@
 ;=================================================================
 	ORG 50H 					;Start Main program at 50H in ROM
 Main:
-	MOV 38H, #-12				;Set 38H to negative number
-	MOV 39H, #-12				;Set 39H to negative number
-	MOV 42H, #-12				;Set 42H to negative number
-	MOV 45H, #-12				;Set 45H to negative number
-	MOV 4BH, #-12				;Set 4BH to negative number
-
 	MOV R0, #50					;Set R0 to Count Number
 	MOV R1, #38H				;Set R1 to Start Count Address
 	MOV R2, #00H				;Set R2 to Store Count
 	LCALL Count_Pos				;Start Count
 here:
-	SJMP here 					;
+	SJMP here 					;Stop here
 	
 ;=====================Define Function Program=====================
 

@@ -1,7 +1,7 @@
 ;===================== Main and Interrupt Start ==================
 
 	ORG 00h 					;Start from address 00h
-	SJMP MAIN 					;Jump to Main program
+	LJMP MAIN 					;Jump to Main program
 	
 	ORG 03h 					;External 0 interrupt start
 	NOP 						;No code
@@ -34,21 +34,13 @@
 ;=================================================================
 	ORG 50H 					;Start Main program at 50H in ROM
 Main:
-	MOV 20H, #11H				;Set value of 20H to 11H
-	MOV 21H, #11H				;Set value of 21H to 11H
-	MOV 22H, #11H				;Set value of 22H to 11H
-	MOV 23H, #11H				;Set value of 23H to 11H
-	MOV 24H, #11H				;Set value of 24H to 11H
-	MOV 25H, #12H				;Set value of 25H to 11H
-
-
 	SETB RS1					;Select Register Bank 3
 	CLR RS0						; |RS1|RS0| = |1|0|
 	MOV R0, #6					;Set R0 to Loop length
 	MOV R1, #20H				;Set R2 to First Address
 	CLR A						;
 	LCALL Check_sum				;Start loop
-	MOV R3, A 					;
+	MOV R7, A 					;
 here:
 	SJMP here 					;
 	

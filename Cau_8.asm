@@ -34,24 +34,55 @@
 ;=================================================================
 	ORG 50H 					;Start Main program at 50H in ROM
 Main:
-	MOV TMOD, #01H				;Choose Timer 0, mode 1 (16 bits)
-								;Clock of Cystal 12MHz: t = 1us
-								;Period of 10Hz: T = 100000us
-								; => Count 50000 and toggle
+	MOV A, #2					;Testcase
+	MOV R1, A					;Store A value
+	LCALL Display_Acc			;Start display Acc value
 here:
-	CPL P3.0					;Toggle Pin 3.0
-	LCALL Timer_Start			;Delay  by timer
 	SJMP here 					;Loop back
 	
 ;=====================Define Function Program=====================
-Timer_Start:
-	MOV TL0, #0AFH				;65535 - 50000 = 15535 = 3CAFH
-	MOV TH0, #03CH				;Set |TH|TL| = |3C|B0|
-	SETB TR0 					;start the timer 0
-Wait_to_timer: 
-	JNB TF0, Wait_to_timer 		;wait until timer 0 over flag
-	CLR TR0 					;stop timer 0
-	CLR TF0 					;clear timer 0 flag
+Display_Acc:
+	CJNE R1, #0, ONE			;Check if A is not ZERO
+	MOV P1, #0C0H				;Display ZERO
+	RET
+ONE:
+	CJNE R1, #1, TWO			;Check if A is not ONE
+	MOV P1, #0F9H				;Display ONE
+	RET
+TWO:
+	CJNE R1, #2, THREE			;Check if A is not TWO
+	MOV P1, #0A4H				;Display TWO
+	RET
+THREE:
+	CJNE R1, #3, FOUR			;Check if A is not THREE
+	MOV P1, #0B0H				;Display THREE
+	RET
+FOUR:
+	CJNE R1, #4, FIVE			;Check if A is not FOUR
+	MOV P1, #99H				;Display FOUR
+	RET
+FIVE:
+	CJNE R1, #5, SIX			;Check if A is not FIVE
+	MOV P1, #92H				;Display FIVE
+	RET
+SIX:
+	CJNE R1, #6, SEVEN			;Check if A is not SIX
+	MOV P1, #82H				;Display SIX
+	RET
+SEVEN:
+	CJNE R1, #7, EIGHT			;Check if A is not SEVEN
+	MOV P1, #0F8H				;Display SEVEN
+	RET
+EIGHT:
+	CJNE R1, #8, NINE			;Check if A is not EIGHT
+	MOV P1, #80H				;Display EIGHT
+	RET
+NINE:
+	CJNE R1, #9, NAN			;Check if A is not NINE
+	MOV P1, #90H				;Display NINE
+	RET
+NAN:
+	MOV P1, #0BFH
 	RET
 ;====================Define Interrupt Handler=====================
 
